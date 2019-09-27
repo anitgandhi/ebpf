@@ -205,6 +205,10 @@ func (ec *elfCode) loadMaps(mapSections map[int]*elf.Section) (map[string]*MapSp
 				return nil, errors.Errorf("map %v: missing max entries", name)
 			case binary.Read(rd, ec.ByteOrder, &spec.Flags) != nil:
 				return nil, errors.Errorf("map %v: missing flags", name)
+			case binary.Read(rd, ec.ByteOrder, &spec.Id) != nil:
+				return nil, errors.Errorf("map %v: missing id", name)
+			case binary.Read(rd, ec.ByteOrder, &spec.Pinning) != nil:
+				return nil, errors.Errorf("map %v: missing pinning", name)
 			case rd.Len() > 0 && binary.Read(rd, ec.ByteOrder, &inner) != nil:
 				return nil, errors.Errorf("map %v: can't read inner map index", name)
 			}
